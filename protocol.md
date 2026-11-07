@@ -27,15 +27,15 @@
 
 ``` bash
 # Downloaded on <???>
-<???>
+wget -P data/ref https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/016/801/865/GCF_016801865.2_TS_CPP_V2/GCF_016801865.2_TS_CPP_V2_rna.fna.gz
 ```
 
 ## Set up: Set file paths
 
 ``` bash
 # Inputs:
-fastq_dir=<???>
-ref_transcripts=<???>
+fastq_dir=../garrigos/fastq
+ref_transcripts=data/ref/GCF_016801865.2_TS_CPP_V2_rna.fna.gz
 
 # Base output dir:
 outdir=results
@@ -43,7 +43,14 @@ outdir=results
 
 ## Step 1: Read trimming with TrimGalore
 
-\<???\>
+`trimgalore.sh` runs TrimGalore on the paired-end FASTQ files of 1 sample, and renames the trimmed FASTQ files to the same names as the input files. It takes 3 arguments: the R1 FASTQ file, the R2 FASTQ file, and the output dir.
+
+``` bash
+for fastq_r1 in "$fastq_dir"/*_R1.fastq.gz; do
+    fastq_r2=${fastq_r1/_R1/_R2}
+    sbatch scripts/trimgalore.sh "$fastq_r1" "$fastq_r2" results/trimgalore
+done
+```
 
 ## Step 2: Creating a transcriptome index with Salmon
 
