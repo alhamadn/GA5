@@ -166,17 +166,39 @@ results/salmon_quant/S86/logs/salmon_quant.log:mapping rate: 83.0532%
 
 *Answer*: For each program, the number of reports that MultiQC found, and why it found this number:
 
+-   fastqc: 44 reports because TrimGalore ran FastQC on both R1 and R2 of each of the 22 samples.
+
+-   trim_galore: 44 reports because TrimGalore writes one trimming report per read file.
+
+-   salmon: 22 meta reports, 22 fragment length distributions, and 22 library format counts reports because Salmon ran and output once per sample.
+
+    ```         
+    ls -lh results/multiqc/multiqc_report.html
+    ```
+
 ### 14: The General Statistics table
 
 *Answer*: The sample with the lowest Salmon mapping rate, and whether this matches your answer to question 11:
+
+I looked at he firs table *General Statistics table* and column aligned %, and I found the same answer for q11 that sample S83 had lowest salmon mapping rate, so yes it is the same.
 
 ### 15: Adapter lengths
 
 *Answer*: The most common adapter lengths, whether this surprised you, and why you think these lengths are the most common:
 
+The most common adapter length was about 2 bp, which doesn't surprise me as when I look at `help` for the Trim Galore's default --stringency is only at 1 bp. So I think even very short random matches get trimmed as adapter, and 2 bp matches happen often by chance.
+
 ### 16: Ask Claude about the MultiQC report
 
 *Answer*: What you asked, and what you learned from Claude's answer (in your own words):
+
+**Q: What I asked:** I asked Claude to explain two things in my MultiQC report in beginner terms: (1) what the Salmon section is showing with its mapping percentages, and (2) what the "Filtered Reads" numbers from Trim Galore mean. And I stated to explain it simply as I am beginner.
+
+**A: Wha I learned:**
+
+-   Wha is the first curve graph, and it explained that is fragment length distribution. Each colored curve is meant for a sample, colored differently. And if samples overlap and peak a he same location, then this is a good sign. And that means there were prepared well. IF no, then preparation was poorly performed.
+
+-   Flered reads, and it explained that for each sample, how many has survived trimming and and how many removed. The removal can be duo to several points such as low quality, contamination from adapter, and reads they get too short.
 
 ------------------------------------------------------------------------
 
@@ -185,6 +207,20 @@ results/salmon_quant/S86/logs/salmon_quant.log:mapping rate: 83.0532%
 ### 17: Claude's review of your protocol and scripts
 
 *Answer*: At least three of Claude's suggestions, and whether you agree or disagree with each one, and why:
+
+Here are my main three chosen feedback from AI about the scripts:
+
+1.  **No `--mem` request on any SBATCH header**
+
+    For his I agree. I went to explain that OOM risk could kill the job and set -e wont catch that. So I **agree** to include it as we learned in class.
+
+2.  **`multiqc.sh` has `#SBATCH` directives but the protocol says to run it with `sbatch`, while the header comment in the script says `Usage: bash scripts/multiqc.sh`**
+
+    AI stated that there is inconsistency for future readers about what we mean to run on compute node or login node. **I partially agree** as it is not something that will need fixing but good catch on not running it containers on login nodes.
+
+3.  **Sample-ID inference uses fragile `basename "$fastq_r1" _R1.fastq.gz` matching with no validation.**
+
+    **I agree.** it's "*fragile"*, but it's the same pattern the course taught us and what we asked to do from GA4. Also all 22 files follow that convention, so it worked here for us.
 
 ### 18: Address a suggestion
 
