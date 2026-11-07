@@ -1,20 +1,3 @@
-```{=html}
-<!--
-GA5 README template.
-- Add your answers to each question's section below.
-- For each question where we want you to add your commands,
-  put the command(s) you ran in the terminal in the corresponding ```bash code block.
-- Where we want to see a command's output, there is a plain ``` code block
-  right below the command block: paste the output there.
-- The code to run each step of the workflow goes in `protocol.md`, not here:
-  you don't need to repeat it in this file.
-- You don't need to paste the contents of your scripts into this file:
-  we will look at the scripts in your `scripts` dir directly
-  (so make sure you commit them!).
-- Delete instructional comments like this one as you go.
--->
-```
-
 # GA5 answers - Mohammed Alhamadn
 
 ------------------------------------------------------------------------
@@ -82,16 +65,20 @@ Code to check the size of the index dir:
 
 ``` bash
 # Your command:
+du -sh results/salmon_index
 ```
 
 The output of the command was:
 
 ```         
+1.1G    results/salmon_index
 ```
 
 *Answer*: How long it took to create the index, and how you found out:
 
-*Answer*: The size of the index dir:
+It took 21 seconds for the script to run and the total job was 28 seconds. I found out from the Slurm log (`results/salmon_index/logs/slurm-salmon_index-*.out`) the script echoes `date` at the start (`Sat Nov  7 11:42:29 AM EST 2026`) and at the end (`Sat Nov  7 11:42:50 AM EST 2026`), so the difference is the runtime. I also watched `squeue -u $USER -l` where the TIME column also matched at `00:22` seconds.
+
+*Answer*: The size of the index dir: **1.1G results/salmon_index**
 
 ### 8: Run Salmon for all samples
 

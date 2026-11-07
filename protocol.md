@@ -26,7 +26,7 @@
 ## Set up: Download the reference transcriptome FASTA file from NCBI
 
 ``` bash
-# Downloaded on <???>
+# Downloaded on 2026-11-07
 wget -P data/ref https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/016/801/865/GCF_016801865.2_TS_CPP_V2/GCF_016801865.2_TS_CPP_V2_rna.fna.gz
 ```
 
@@ -54,12 +54,21 @@ done
 
 ## Step 2: Creating a transcriptome index with Salmon
 
-\<???\>
+`salmon_index.sh` builds a Salmon index from the reference transcriptome, and takes 2 arguments 1- the reference transcript FASTA file, and 2- the output dir.
+
+```         
+  sbatch scripts/salmon_index.sh "$ref_transcripts" results/salmon_index
+```
 
 ## Step 3: Pseudo-alignment and quantification with Salmon
 
-\<???\>
+`salmon_quant.sh` runs Salmon in pseudo-alignment mode for 1 sample, and takes 4 arguments: the R1 FASTQ file, the R2 FASTQ file, the Salmon index dir, and the output dir.
+
+```         
+for fastq_r1 in results/trimgalore/*_R1.fastq.gz; do
+    fastq_r2=${fastq_r1/_R1/_R2}
+    sbatch scripts/salmon_quant.sh "$fastq_r1" "$fastq_r2" results/salmon_index results/salmon_quant
+    done
+```
 
 ## Step 4: Summarizing the results of all steps with MultiQC
-
-\<???\>
