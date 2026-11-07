@@ -5,7 +5,7 @@
 -   Date last modified: 2026-11-07
 -   This was run at the `Pitzer` cluster of the Ohio Supercomputer Center ([https://www.osc.edu](#0){.uri})
 -   OSC working dir: `/fs/ess/PAS3493/people/alhamadn.1/GA5`
--   GihostnametHub repository: \<???\>
+-   GihostnametHub repository: <https://github.com/alhamadn/GA5>
 
 ## Prerequisites
 
@@ -45,7 +45,7 @@ outdir=results
 
 `trimgalore.sh` runs TrimGalore on the paired-end FASTQ files of 1 sample, and renames the trimmed FASTQ files to the same names as the input files. It takes 3 arguments: the R1 FASTQ file, the R2 FASTQ file, and the output dir.
 
-```{bash}
+``` bash
 for fastq_r1 in "$fastq_dir"/*_R1.fastq.gz; do
     fastq_r2=${fastq_r1/_R1/_R2}
     sbatch scripts/trimgalore.sh "$fastq_r1" "$fastq_r2" results/trimgalore
@@ -56,15 +56,15 @@ done
 
 `salmon_index.sh` builds a Salmon index from the reference transcriptome, and takes 2 arguments 1- the reference transcript FASTA file, and 2- the output dir.
 
-```{bash}
-  sbatch scripts/salmon_index.sh "$ref_transcripts" results/salmon_index
+``` bash
+ sbatch scripts/salmon_index.sh "$ref_transcripts" results/salmon_index
 ```
 
 ## Step 3: Pseudo-alignment and quantification with Salmon
 
 `salmon_quant.sh` runs Salmon in pseudo-alignment mode for 1 sample, and takes 4 arguments: the R1 FASTQ file, the R2 FASTQ file, the Salmon index dir, and the output dir.
 
-```{bash}
+``` bash
 for fastq_r1 in results/trimgalore/*_R1.fastq.gz; do
     fastq_r2=${fastq_r1/_R1/_R2}
     sbatch scripts/salmon_quant.sh "$fastq_r1" "$fastq_r2" results/salmon_index results/salmon_quant
@@ -75,6 +75,6 @@ for fastq_r1 in results/trimgalore/*_R1.fastq.gz; do
 
 `multiqc.sh` runs MultiQC once for all outputs of the previous steps. It takes 2 arguments: the base output dir and the MultiQC output dir.
 
-```{bash}
+``` bash
  sbatch scripts/multiqc.sh results results/multiqc
 ```
