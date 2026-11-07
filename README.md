@@ -172,15 +172,11 @@ results/salmon_quant/S86/logs/salmon_quant.log:mapping rate: 83.0532%
 
 -   salmon: 22 meta reports, 22 fragment length distributions, and 22 library format counts reports because Salmon ran and output once per sample.
 
-    ```         
-    ls -lh results/multiqc/multiqc_report.html
-    ```
-
 ### 14: The General Statistics table
 
 *Answer*: The sample with the lowest Salmon mapping rate, and whether this matches your answer to question 11:
 
-I looked at he firs table *General Statistics table* and column aligned %, and I found the same answer for q11 that sample S83 had lowest salmon mapping rate, so yes it is the same.
+I looked at he firs table *General Statistics table* and column aligned %, and I found the same answer for q11 that sample S83 had lowest salmon mapping rate (**76.2%**), so yes it is the same.
 
 ### 15: Adapter lengths
 
@@ -226,6 +222,8 @@ Here are my main three chosen feedback from AI about the scripts:
 
 *Answer*: Which suggestion(s) you addressed, and what you changed:
 
+From Q17, I addressed AI suggestion for n2 which is to change `scripts/multiqc.sh`'s usage comment from `Usage: bash scripts/multiqc.sh …` to `Usage: sbatch scripts/multiqc.sh …` so it matches how the script actually runs (through Slurm, not on the login node). It was also committed after the edits.
+
 ------------------------------------------------------------------------
 
 ## Part F: Publish your repo on GitHub
@@ -236,4 +234,4 @@ Here are my main three chosen feedback from AI about the scripts:
 
 ### 20: Get a (test) DOI with Zenodo
 
-*Answer*: Your Zenodo Sandbox DOI:
+*Answer*: Your Zenodo Sandbox DOI: **`10.5072/zenodo.636753`**
